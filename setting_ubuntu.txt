@@ -1,0 +1,158 @@
+Last revision: Sat Jan 23 08:39:22 ART 2010
+
+Partitions
+swap 500mb
+root 30 gb
+home 112 gb
+
+Programs to install on fresh installation of ubuntu - 9.10 Karmic
+
+The programs listed were useful to me some time, an X indicates it was installed
+
+EDITING
+x vim-gnome
+x vim-latexsuite
+x latex-beamer
+
+SYSTEM
+x cdargs
+x gnome-do
+x colordiff
+x apt-file
+- bleachbit		deletes unnecesary files
+- startupmanager
+- gmountiso
+
+WINDOW MANAGER
+x compizconfig-settings-manager
+
+PROGRAMMING
+x build-essential
+x ctags
+x gdb
+x python2.6
+x meld
+x subversion
+x manpages-dev
+x pkg-config
+x valgrind
+x scons
+x git-core
+
+java
+x sun-java6-bin
+x libjogl-java
+x libjogl-jni
+- eclipse
+- eclipse-cdt       c++ ide
+
+x bvi
+- ghex
+- hexcurse
+- umbrello
+- gdbtui
+
+DATABASE
+x sqlite3
+x mysql-admin
+x mysql-server
+
+NETWORKING
+x ifstat
+- wireshark
+
+MEDIA
+x mplayer
+x avidemux
+x vlc
+- exaile
+- exfalso       audio tag editor
+- ripoff        mp3 ripper
+- tovid         dvd making
+
+MUSIC TYPESETTING
+x timidity
+x lilypond
+- rosegarden
+- denemo
+
+MISC
+x calibre       ebook manager
+x tellico       collection manager
+x virtualbox    descargar el .deb de sun que no es ose, porque este soporta usb. ver http://www.howtoforge.com/installing-virtualbox-2.0.0-on-ubuntu-8.10-desktop
+- virtualbox-ose-qt
+x truecrypt     download .deb
+x ubuntu-restricted-extras  para poder ripear mp3 (en realidad solo hace falta gstreamer0.10-plugins-ugly-multiverse)
+- a2ps
+- gv            ghostview
+- apvlv 	pdf with vim keybindings (not in repositories)
+
+GAMES
+- gbrainy
+- neverball
+- gplanarity
+- pioneers
+
+FIREFOX PLUGINS
+- bugmenot
+x coolpreviews
+- cooliris         PENDING
+- delicious bookmarks
+- dom inspector
+- download helper
+- firebug
+- google gears
+- greasemonkey
+x it's all text
+x noscript
+x numext
+x search keys
+- smooth wheel
+- switchproxy tool
+x tab kit
+x vimperator
+- downthemall
+
+WEB DEVELOPMENT
+x phpmyadmin 
+x python-django     
+x python-mysqldb
+
+OFFICE
+- openoffice.org-calc
+- gnumeric
+x evince        pdf viewer  
+x orpie         calculator  
+
+WEB
+x prism-google-mail
+x prism-google-reader
+x flashplugin-installer
+
+IMAGE EDITING
+x gimp
+x picasa        download .deb
+x xsane   
+x inkscape
+- exiv2         image metadata manipulation tool
+- quiteinsane   scanning
+
+PANORAMA TOOLS
+- hugin
+- pandora
+- enblend
+
+NOTEBOOK SPECIFIC
+- tpb (thinkpad)
+- 915resolution (vaio?)
+
+
+
+Programs that may result interesting
+kivio - flowcharting
+pdfmod - modify pdfs
+planner
+okular - pdf viewer
+hamster-applet - timetracking
+shutter - screen shot capture
+
