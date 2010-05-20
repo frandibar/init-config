@@ -64,10 +64,13 @@ del() {
     mkdir -p ~/.trash
     mv "$@" ~/.trash
 }
+# make function available from scripts
+export -f del   
 
 ctrash() {
     rm -rf ~/.trash
 }
+
 
 # to avoid entering the passphrase on each git commit
 SSH_ENV="$HOME/.ssh/environment"
