@@ -1,8 +1,9 @@
+# My settings for bash shell
 
-
+# set command prompt in blue, showing current directory
 PS1='\[\033[01;34m\]\w\[\033[00m\]\$ '
 
-# some more ls aliases
+# aliases
 alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
 alias ll='ls -lh'
@@ -13,7 +14,10 @@ alias diff='colordiff'
 alias gcc='colorgcc'
 alias g++='colorgcc'
 #export CC="colorgcc"
+
+# alias for opening file in an existing gvim, instead of launching a new one
 alias gv='gvim --remote-silent'
+# avoid messages when launching gvim
 alias gvim='gvim 2>/dev/null'
 
 alias ipython='ipython -noconfirm_exit'
@@ -22,7 +26,7 @@ alias gdb="gdbtui"
 # vi behaviour for command line 
 #set -o vi
 
-
+# paths
 PATH=/usr/local/Trolltech/Qt-4.1.1/bin:"${PATH}"
 export PYTHONPATH=/home/fran/programming/python/django_projects:"${PYTHONPATH}"
 
@@ -33,9 +37,9 @@ LANG=en_US.UTF-8
 #export JDK_HOME=$JAVA_HOME
 #export PATH=$PATH:$JAVA_HOME/bin
 
-#https://bugs.launchpad.net/ubuntu/+source/bash/+bug/80635
-#this allows ctrl-s in the console
-#it has to do with controlling ctrl-s in vim
+# https://bugs.launchpad.net/ubuntu/+source/bash/+bug/80635
+# this allows ctrl-s in the console
+# it has to do with controlling ctrl-s in vim
 stty -ixon
 
 # cdargs settings
@@ -61,14 +65,21 @@ findsym() {
 }
 
 del() {
-    mkdir -p ~/.trash
-    mv "$@" ~/.trash
+    trash=$HOME/.trash
+    mkdir -p $trash
+
+    # move files to trash dir, with the time stamp appended to name
+    for file in "$@"
+    do
+        mv $file $trash/$file.$(date +%F_%T:%N)
+    done
 }
+
 # make function available from scripts
 export -f del   
 
 ctrash() {
-    rm -rf ~/.trash
+    rm -rf $HOME/.trash
 }
 
 
@@ -94,3 +105,4 @@ if [ -f "${SSH_ENV}" ]; then
 else
   start_agent;
 fi
+
