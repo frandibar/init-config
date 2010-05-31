@@ -11,11 +11,13 @@ set hidden                  " Change buffer without saving
 set nowrap                  " Don't wrap lines longer than the width of the window on the next line.
 set scrolloff=2             " Minimal number of screen lines to keep above and below the cursor.
 set laststatus=2            " Always have status line for each window.
-set ruler                   " Show the line and column number of the cursor position, separated by a
+set statusline=%f%m%r%h%w\ %y\ %=[buf\ %n]\ %l,%c/%L\ %p%%   " information to show in status line
+"set ruler                   " Show the line and column number of the cursor position
 set backspace=indent,eol,start  " Influences the working of <BS>, <Del>, CTRL-W and CTRL-U in Insert mode.
 set cursorline              " Highlight the screen line of the cursor.
 set number                  " Print the line number in front of each line.
-set wildmenu                " Possible matches are shown just above the command line, with the
+set wildmenu                " Possible matches are shown just above the command line
+set wildmode=list:longest   " Complete longest common string, then list alternatives
 
 set expandtab               " Use the appropriate number of spaces to insert a <Tab>
 set shiftwidth=4            " Number of spaces to use for each step of (auto)indent.
@@ -28,6 +30,9 @@ set incsearch               " While typing a search command, show where the patt
 set nowrapscan              " Searches wrap around the end of the file.  Also applies to |]s| and
 
 set makeprg=make\ %<        " Program to use for the :make command.
+"set makeprg=make distcc=n ccache=n
+"set makeprg=make
+set tags=./tags,tags,../tags,../../tags,../../../tags,../../../../tags,/usr/include/tags
 set cindent                 " Enables automatic C program indenting.
 set shellslash              " Use a forward slash when expanding file names.
 set background=dark         " Vim will try to use colors that look good on a dark background.
@@ -35,6 +40,8 @@ set mouse=a                 " Enable the use of the mouse for all modes (normal,
 
 filetype plugin on          " Enable filetype plugins.
 syntax on                   " Turn on syntax highlighting
+
+let mapleader = ","         " set <leader> value for mappings
 
 colorscheme slate
 " The following highlights must go after the colorscheme to avoid being overrided.
@@ -68,19 +75,21 @@ vnoremap <Up> gk
 inoremap <Down> <C-o>gj
 inoremap <Up> <C-o>gk
 
-" scroll up and down with ctrl-up/down
-map <C-Down> <C-e>
-map <C-Up> <C-y>
+" scroll mode with ctrl key
+map <c-up> <c-y>
+map <c-down> <c-e>
+map <c-k> <c-y>
+map <c-j> <c-e>
 
-let mapleader = ","
+" smooth scrolling
+map <C-U> <C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y>
+map <C-D> <C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E>
 
 " mapping to remove highlight search
 map <Leader>s :nohlsearch<CR>
-" mapping to buffer delete
-noremap <Leader>bd :bd<CR>
 
 " Line break as <Leader>b
-map <Leader>b i<CR><Esc>      
+"map <Leader>b i<CR><Esc>      
 
 " see vimtip #159        
 " for search and replace
@@ -105,7 +114,7 @@ vnoremap <C-S>		<C-C>:update<CR>
 inoremap <C-S>		<C-O>:update<CR>
 
 
-set pdev=MP180      " Configure local printer
+"set pdev=MP180      " Configure local printer
 
 " Automatically change directory to the file being edited
 " http://vim.wikia.com/wiki/Change_to_the_directory_of_the_current_file
@@ -140,6 +149,9 @@ let g:miniBufExplModSelTarget = 1
 let Tlist_Sort_Type = "name"
 :nmap <F2> :TlistToggle<cr>
 
+" bufferlist plugin mappings
+map <silent> <F3> :call BufferList()<CR>
+
 " exUtility plugin mappings
 "nnoremap <silent> <F5> :ExgsToggle<CR>
 "nnoremap <silent> <Leader>gs :ExgsSelectToggle<CR>
@@ -150,11 +162,11 @@ let Tlist_Sort_Type = "name"
 "let g:exGS_backto_editbuf = 0
 "let g:exGS_close_when_selected = 0
 
-
-" FuzzyFinder plugin mappings
-nnoremap <Leader>ff :FuzzyFinderFile<cr>
-nnoremap <Leader>fb :FuzzyFinderBuffer<cr>
-nnoremap <Leader>fr :FuzzyFinderMruFile<cr>
+" FuzzyFinder plugin mappings (fuf)
+nnoremap <Leader>ff :FufFile<cr>
+nnoremap <Leader>fb :FufBuffer<cr>
+nnoremap <Leader>fr :FufMruFile<cr>
+let g:fuf_modesDisable = [ 'mrucmd' ]   " enable mrufile, since the default value is ['mrufile', 'mrucmd']
 
 " FSwitch plugin mappings
 nmap <silent> <Leader>of :FSHere<CR>
@@ -165,6 +177,16 @@ if has("gui")
   inoremap <M-Space> <C-O>:simalt ~<CR>
   cnoremap <M-Space> <C-C>:simalt ~<CR>
 endif
+
+" NERD_commenter plugin
+let NERDShutUp=1    " Avoid warning for unknown filetypes
+
+" camel case motion plugin mappings
+" Replace the default 'w', 'b' and 'e' mappings instead of defining additional mappings ',w', ',b' and ',e':
+"map <silent> w <Plug>CamelCaseMotion_w
+"map <silent> b <Plug>CamelCaseMotion_b
+"map <silent> e <Plug>CamelCaseMotion_e
+
 
 " avoid highlighting matching parens
 let loaded_matchparen = 1
@@ -180,8 +202,22 @@ nmap <silent> <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name")
      \ . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name")
      \ . ">"<CR>
 
-" nerd_commenter
-let NERDShutUp=1    " Avoid warning for unknown filetypes
+ " cscope config
+if has("cscope")
+    set cscopeprg=/usr/bin/cscope
+    set cscopetagorder=0      " use cscope db first, then tag files when calling :cstag
+    set cscopetag           " use cscope for tag commands
+    set nocscopeverbose
+    " add any database in current directory
+    if filereadable("cscope.out")
+        cs add cscope.out
+    " else add database pointed to by environment
+    elseif $CSCOPE_DB != ""
+        cs add $CSCOPE_DB
+    endif
+    set cscopeverbose
+	set cscopequickfix=s-,c-,d-,i-,t-,e-
+endif
 
 " pydiction plugin settings
 "let g:pydiction_location='/home/fran/.vim/ftplugin/pydiction'
@@ -189,7 +225,22 @@ let NERDShutUp=1    " Avoid warning for unknown filetypes
 " bufferlist
 map <silent> <F3> :call BufferList()<CR>
 
+" toggle quick fix open/close
+function! QFixToggle()
+  if exists("g:qfix_win")
+    cclose
+    unlet g:qfix_win
+  else
+    copen 10
+    let g:qfix_win = bufnr("$")
+  endif
+endfunction
+
+nmap <silent> <leader>x :call QFixToggle()<CR>
+
+
 " workplace specific
+"set path+=/home/pancho/impact/trunk/**
 "set path+=w:\**
 "set complete=.      " set the matches for insert mode completion to current file
 "set keywordprg=~/help.bat
