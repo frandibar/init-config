@@ -28,16 +28,23 @@ alias gdb="gdbtui"
 # vi behaviour for command line 
 #set -o vi
 
-# paths
+# environment vars
+
+# qt
 PATH=/usr/local/Trolltech/Qt-4.1.1/bin:"${PATH}"
-export PYTHONPATH=/home/fran/programming/python/django_projects:"${PYTHONPATH}"
+
+# django
+#export PYTHONPATH=/home/fran/programming/python/django_projects:"${PYTHONPATH}"
+
+# java
+#export JAVA_HOME=/usr/java/jdk
+#export JDK_HOME=$JAVA_HOME
+#export PATH=$PATH:$JAVA_HOME/bin
 
 #LANG=en_US.iso-8859-1
 LANG=en_US.UTF-8
 
-#export JAVA_HOME=/usr/java/jdk
-#export JDK_HOME=$JAVA_HOME
-#export PATH=$PATH:$JAVA_HOME/bin
+#export http_proxy="80:192.168.254.254"
 
 # https://bugs.launchpad.net/ubuntu/+source/bash/+bug/80635
 # this allows ctrl-s in the console
@@ -48,6 +55,7 @@ stty -ixon
 if [ -e /usr/share/doc/cdargs/examples/cdargs-bash.sh ]; then
   . /usr/share/doc/cdargs/examples/cdargs-bash.sh
 fi
+
 
 findstr() {
 	egrep -IRn "$1" ${2:-.} \
@@ -89,22 +97,22 @@ ctrash() {
 SSH_ENV="$HOME/.ssh/environment"
 
 function start_agent {
-  echo "Initializing new SSH agent..."
-  /usr/bin/ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
-  echo succeeded
-  chmod 600 "${SSH_ENV}"
-  . "${SSH_ENV}" > /dev/null
-  /usr/bin/ssh-add;
+    echo "Initializing new SSH agent..."
+    /usr/bin/ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
+    echo succeeded
+    chmod 600 "${SSH_ENV}"
+    . "${SSH_ENV}" > /dev/null
+    /usr/bin/ssh-add;
 }
 
 # Source SSH settings, if applicable
 if [ -f "${SSH_ENV}" ]; then
-  . "${SSH_ENV}" > /dev/null
-  #ps ${SSH_AGENT_PID} doesn't work under cywgin
-  ps -ef | grep ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || {
-    start_agent;
-  }
+    . "${SSH_ENV}" > /dev/null
+    #ps ${SSH_AGENT_PID} doesn't work under cywgin
+    ps -ef | grep ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || {
+        start_agent;
+    }
 else
-  start_agent;
+    start_agent;
 fi
 
