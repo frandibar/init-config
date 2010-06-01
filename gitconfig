@@ -1,4 +1,15 @@
+[user]
+	name = Francisco Dibar
+	email = frandibar@gmail.com
+[merge]
+	tool = meld
+[core]
+	editor = vim
 [alias]
-    st = status
-    ci = commit
-    co = checkout
+	ci = commit
+	st = status
+[giggle]
+	main-window-maximized = false
+	main-window-geometry = 700x550+354+116
+	main-window-view = FileView
+	history-view-vpane-position = 224
