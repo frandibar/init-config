@@ -74,22 +74,56 @@ findsym() {
 	findstr "$pattern" "$2"
 }
 
+# replacement for rm function, uses trash
 del() {
-    trash=$HOME/.trash
-    mkdir -p $trash
+    trash="$HOME"/.trash
+    mkdir -p "$trash"
 
-    # move files to trash dir, with the time stamp appended to name
-    for file in "$@"
-    do
-        mv $file $trash/$file.$(date +%F_%T:%N)
+    # possible cases:
+    # 1. del dir/[..]/filename
+    #   move filename to trash (extract dir)
+    # 2. del dir/[..]/dir
+    #   move dir to trash (extract dir)
+    # 3. del filename
+    #   move filename to trash
+    # 4. del dir
+    #   move dir to trash
+
+    timestamp=`date +%F_%T:%N`
+    # iterate through each argument
+    # and move files to trash dir, with the timestamp appended to name
+    for file in "$@"; do
+        local newname
+        if [ -d "$file" ]; then
+            if [ `basename "$file"` == "$file" ]; then
+                # case 4
+                newname="$file".$timestamp
+            else
+                # case 2
+                newname=`basename "$file"`.$timestamp
+            fi
+        elif [ `basename "$file"` == "$file" ]; then
+            # case 3
+            newname="$file".$timestamp
+        else
+            # case 1
+            newname=`basename "$file"`.$timestamp
+        fi
+
+        mv "$file" "$trash"/"$newname"
     done
 }
 
 # make function available from scripts
 export -f del   
 
+# clear trash
 ctrash() {
-    rm -rf $HOME/.trash
+    trash="$HOME"/.trash
+
+    # TODO: step out of the trash dir if inside
+
+    rm -rf "$trash"
 }
 
 
