@@ -13,6 +13,7 @@ EDITING
 x vim-gnome
 x vim-latexsuite
 x latex-beamer
+x par (text formater)
 
 SYSTEM
 x cdargs
@@ -155,4 +156,5 @@ planner
 okular - pdf viewer
 hamster-applet - timetracking
 shutter - screen shot capture
-
+wings3d - 3d modelling
+synfig - vector 2d animator

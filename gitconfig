@@ -9,7 +9,8 @@
 	ci = commit
 	st = status
 [giggle]
-	main-window-maximized = false
-	main-window-geometry = 700x550+354+116
+	main-window-maximized = true
+	main-window-geometry = 997x631+0+24
 	main-window-view = FileView
-	history-view-vpane-position = 224
+	history-view-vpane-position = 423
+	file-view-vpane-position = 487

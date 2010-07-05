@@ -38,6 +38,8 @@ set shellslash              " Use a forward slash when expanding file names.
 set background=dark         " Vim will try to use colors that look good on a dark background.
 set mouse=a                 " Enable the use of the mouse for all modes (normal, visual, insert, command
 
+set formatprg=par           " Use par as the external text formatting program
+
 filetype plugin on          " Enable filetype plugins.
 syntax on                   " Turn on syntax highlighting
 
