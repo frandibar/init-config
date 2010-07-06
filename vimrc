@@ -23,7 +23,7 @@ set expandtab               " Use the appropriate number of spaces to insert a <
 set shiftwidth=4            " Number of spaces to use for each step of (auto)indent.
 set tabstop=4               " Number of spaces that a <Tab> in the file counts for. 
 set softtabstop=4           " Number of spaces that a <Tab> counts for while performing editing operations, like inserting a <Tab> or using <BS>. 
-
+set listchars=tab:▸\ ,eol:$ " Modify tab char when set list
 set hlsearch                " When there is a previous search pattern, highlight all its matches.
 set ignorecase              " Case is ignored for searches
 set incsearch               " While typing a search command, show where the pattern, as it was typed so far, matches. 
@@ -133,6 +133,8 @@ inoremap <C-S>		<C-O>:update<CR>
 
 " Mapping to change directory to the file being edited
 map <silent> <Leader>cd :cd %:p:h<CR>
+" Mapping to add the current file path when openning a file
+map <leader>ew :e <C-R>=expand("%:p:h") . "/" <CR>
 
 " Always add the current file's directory to the path if not already there
 autocmd BufRead *
