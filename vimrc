@@ -41,7 +41,7 @@ set mouse=a                 " Enable the use of the mouse for all modes (normal,
 set formatprg=par           " Use par as the external text formatting program
 
 filetype plugin on          " Enable filetype plugins.
-syntax on                   " Turn on syntax highlighting
+syntax enable               " Turn on syntax highlighting
 
 let mapleader = ","         " set <leader> value for mappings
 
