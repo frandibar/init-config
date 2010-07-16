@@ -87,6 +87,10 @@ map <c-j> <c-e>
 map <C-U> <C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y>
 map <C-D> <C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E>
 
+" mappings to keep the current visual block selection active after changing indentation
+vmap > >gv
+vmap < <gv
+
 " mapping to remove highlight search
 map <Leader>s :nohlsearch<CR>
 
