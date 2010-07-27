@@ -23,11 +23,14 @@ set expandtab               " Use the appropriate number of spaces to insert a <
 set shiftwidth=4            " Number of spaces to use for each step of (auto)indent.
 set tabstop=4               " Number of spaces that a <Tab> in the file counts for. 
 set softtabstop=4           " Number of spaces that a <Tab> counts for while performing editing operations, like inserting a <Tab> or using <BS>. 
+
 set listchars=tab:▸\ ,eol:$ " Modify tab char when set list
 set hlsearch                " When there is a previous search pattern, highlight all its matches.
 set ignorecase              " Case is ignored for searches
 set incsearch               " While typing a search command, show where the pattern, as it was typed so far, matches. 
-set nowrapscan              " Searches wrap around the end of the file.  Also applies to |]s| and
+set nowrapscan              " Searches wrap around the end of the file.
+set smartcase               " Override the ignorecase option if the search pattern contains upper case characters.
+set showcmd                 " Show (partial) command in the last line of the screen.
 
 set makeprg=make\ %<        " Program to use for the :make command.
 "set makeprg=make distcc=n ccache=n
@@ -61,6 +64,11 @@ autocmd FileType python set omnifunc=pythoncomplete#Complete
 
 " Add lilypond syntax file
 autocmd BufReadPre *.ly set runtimepath+=/usr/share/lilypond/2.12.3/vim/
+
+" move 4 spaces to the right with tab
+nmap <Tab> 4l
+" move 4 spaces to the left with shift-tab
+nmap <S-Tab> 4h
 
 " Better mapping for omni-completion
 imap <c-space> <c-x><c-o>
@@ -252,4 +260,13 @@ nmap <silent> <leader>x :call QFixToggle()<CR>
 "set path+=w:\**
 "set complete=.      " set the matches for insert mode completion to current file
 "set keywordprg=~/help.bat
+function! DateHeader()
+    execute ".!date"
+    normal o
+    normal 80i-
+    normal o
+endfunction
+
+map <silent> <leader>l :call DateHeader()<CR>
+
 
