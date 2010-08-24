@@ -43,24 +43,31 @@ set mouse=a                 " Enable the use of the mouse for all modes (normal,
 
 set formatprg=par           " Use par as the external text formatting program
 
+" mappings for restricting search to visual selection
+"vnoremap <M-/> <Esc>/\%V
+"nnoremap <M-/> /\%V
+
 filetype plugin on          " Enable filetype plugins.
 syntax enable               " Turn on syntax highlighting
 
 let mapleader = ","         " set <leader> value for mappings
 
 colorscheme slate
-" The following highlights must go after the colorscheme to avoid being overrided.
+" The following highlights must go after the colorscheme to avoid being overriden.
 highlight LineNr ctermfg=darkgrey guifg=darkgrey 
 highlight CursorLine ctermbg=darkblue term=bold cterm=bold guibg=Grey25
+highlight CursorColumn ctermbg=darkblue term=bold cterm=bold guibg=Grey17
 " override slate colorscheme for PreProc
 highlight PreProc guibg=black   
 
 " when I save my ~/.vimrc file, it is sourced automatically.
-au! BufWritePost .vimrc nested source % 
-au! BufWritePost _vimrc nested source %  
+autocmd! BufWritePost .vimrc nested source % 
+autocmd! BufWritePost _vimrc nested source %  
 
 " Set omni completion function for python files
 autocmd FileType python set omnifunc=pythoncomplete#Complete
+" Set cursorcolumn for python files
+autocmd FileType python setlocal cursorcolumn
 
 " Add lilypond syntax file
 autocmd BufReadPre *.ly set runtimepath+=/usr/share/lilypond/2.12.3/vim/
@@ -205,7 +212,7 @@ let NERDShutUp=1    " Avoid warning for unknown filetypes
 
 
 " avoid highlighting matching parens
-let loaded_matchparen = 1
+"let loaded_matchparen = 1
 
 " disable comment autocomplete
 au FileType * setl fo-=cro
@@ -261,6 +268,7 @@ nmap <silent> <leader>x :call QFixToggle()<CR>
 "set complete=.      " set the matches for insert mode completion to current file
 "set keywordprg=~/help.bat
 function! DateHeader()
+    normal O
     execute ".!date"
     normal o
     normal 80i-
