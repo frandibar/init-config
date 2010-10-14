@@ -262,18 +262,6 @@ let NERDShutUp=1    " Avoid warning for unknown filetypes
 "let g:pydiction_location='/home/fran/.vim/ftplugin/pydiction'
 
 
-" SECTION WORKPLACE SPECIFIC
-
-function! DateHeader()
-    normal O
-    execute ".!date"
-    normal o
-    normal 80i-
-    normal o
-endfunction
-
-map <silent> <Leader>l :call DateHeader()<CR>
-
-"set pdev=MP180      " Configure local printer
-
+" Load settings specific for local machine
+source ~/.vimrc-local
 
