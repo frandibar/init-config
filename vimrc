@@ -130,10 +130,6 @@ vmap < <gv
 " mapping to remove highlight search
 map <Leader>/ :nohlsearch<CR>
 
-" Line break as <Leader>b
-"map <Leader>b i<CR><Esc>      
-
-
 " see vimtip #159        
 " for search and replace
 map <F4> :%s//g<Left><Left>
