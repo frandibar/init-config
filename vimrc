@@ -13,7 +13,7 @@ set nowrap                  " Don't wrap lines longer than the width of the wind
 set scrolloff=2             " Minimal number of screen lines to keep above and below the cursor.
 set laststatus=2            " Always have status line for each window.
 set statusline=%f%m%r%h%w\ %y\ %=[buf\ %n]\ %l,%c/%L\ %p%%   " information to show in status line
-"set ruler                   " Show the line and column number of the cursor position (commented out since this info was set in statusline)
+set ruler                   " Show the line and column number of the cursor position (commented out since this info was set in statusline)
 set cursorline              " Highlight the screen line of the cursor.
 set number                  " Print the line number in front of each line.
 set listchars=tab:▸\ ,eol:$ " Modify tab char when set list
@@ -40,16 +40,15 @@ set showmatch               " When a bracket is inserted, briefly jump to the ma
 
 set formatprg=par           " Use par as the external text formatting program
 set makeprg=make\ %<        " Program to use for the :make command.
-"set makeprg=make distcc=n ccache=n
-"set makeprg=make
 set tags=~/devel/src/**/tags,/usr/include/tags
 set cindent                 " Enables automatic C program indenting.
 
 set mouse=a                 " Enable the use of the mouse for all modes (normal, visual, insert, command
 
-" mappings for restricting search to visual selection
-"vnoremap <M-/> <Esc>/\%V
-"nnoremap <M-/> /\%V
+" These lines must be called before enabling filetype detection
+" Pathogen plugin
+call pathogen#runtime_append_all_bundles()
+call pathogen#helptags()
 
 filetype on                 " Enable file type detection
 filetype plugin on          " Enable filetype plugins.
@@ -60,14 +59,14 @@ let mapleader = ","         " set <Leader> value for mappings
 
 colorscheme slate
 
-" The following highlights must go after the colorscheme to avoid being overriden.
+" The following highlights must go after setting the colorscheme to avoid being overriden.
 highlight LineNr ctermfg=darkgrey guifg=darkgrey 
 highlight CursorLine ctermbg=darkblue term=bold cterm=bold guibg=Grey25
 highlight CursorColumn ctermbg=darkblue term=bold cterm=bold guibg=Grey17
 " override slate colorscheme for PreProc
 highlight PreProc guibg=black   
 
-" when I save my ~/.vimrc file, it is sourced automatically.
+" save ~/.vimrc file automatically when it's saved
 autocmd! BufWritePost .vimrc nested source % 
 autocmd! BufWritePost _vimrc nested source %  
 
@@ -80,10 +79,8 @@ autocmd FileType python setlocal cursorcolumn
 autocmd BufReadPre *.ly set runtimepath+=/usr/share/lilypond/2.12.3/vim/
 
 " autocommands for file types
-autocmd Filetype plaintex source ~/.vim/source/latex.vim
-autocmd Filetype tex source ~/.vim/source/latex.vim
-autocmd Filetype html source ~/.vim/source/html.vim
-"autocmd Filetype cpp source ~/.vim/source/cpp.vim
+autocmd Filetype plaintex,tex source ~/.vim/bundle/frandibar/source/latex.vim
+autocmd Filetype html source ~/.vim/bundle/frandibar/source/html.vim
 
 " disable comment autocomplete
 autocmd FileType * setlocal formatoptions-=c
@@ -93,13 +90,13 @@ autocmd FileType * setlocal formatoptions-=o
 nnoremap <Leader>; ;
 nnoremap ; :
 
+" Better mapping for omni-completion
+imap <c-space> <c-x><c-o>
+
 " move 4 spaces to the right with tab
 nmap <Tab> 4l
 " move 4 spaces to the left with shift-tab
 nmap <S-Tab> 4h
-
-" Better mapping for omni-completion
-imap <c-space> <c-x><c-o>
 
 " When lines wrap, move to next wrapped line, although it's the same line.
 nnoremap j gj
@@ -146,20 +143,6 @@ noremap <C-S>		:update<CR>
 vnoremap <C-S>		<C-C>:update<CR>
 inoremap <C-S>		<C-O>:update<CR>
 
-
-" Automatically change directory to the file being edited
-" http://vim.wikia.com/wiki/Change_to_the_directory_of_the_current_file
-" It will:
-"   * use autochdir if available
-"   * use an autocmd if autochdir is not available
-"   * take care of non-existant directories
-"   * take care of spaces in the path 
-"if exists('+autochdir')
-"  set autochdir
-"else
-"  autocmd BufEnter * silent! lcd %:p:h:gs/ /\\ /
-"endif
-
 " Mapping to change directory to the file being edited
 map <silent> <Leader>cd :cd %:p:h<CR>
 " Mapping to add the current file path when openning a file
@@ -171,10 +154,7 @@ autocmd BufRead *
       \ exec "set path-=".s:tempPath |
       \ exec "set path+=".s:tempPath
 
-" avoid highlighting matching parens
-"let loaded_matchparen = 1
-
-" return the syntax highlighting group that the current "thing" under the
+" Return the syntax highlighting group that the current "thing" under the
 " cursor belongs to -- very useful for figuring out what to change as far as
 " syntax highlighting goes.
 nmap <silent> <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name")
@@ -222,17 +202,6 @@ endif
 
 " SECTION PLUGIN SPECIFIC
 
-" Minibufexplorer plugin mappings
-" use ctrl-up + tab or ctrl-tab
-let g:miniBufExplMapWindowNavVim = 1
-let g:miniBufExplMapWindowNavArrows = 1
-let g:miniBufExplMapCTabSwitchBufs = 1
-let g:miniBufExplModSelTarget = 1
-
-" TagList plugin options
-let Tlist_Sort_Type = "name"
-:nmap <F2> :TlistToggle<cr>
-
 " Bufferlist plugin mappings
 map <silent> <F3> :call BufferList()<CR>
 
@@ -248,16 +217,7 @@ nmap <silent> <Leader>of :FSHere<CR>
 " NERD_commenter plugin
 let NERDShutUp=1    " Avoid warning for unknown filetypes
 
-" camel case motion plugin mappings
-" Replace the default 'w', 'b' and 'e' mappings instead of defining additional mappings ',w', ',b' and ',e':
-"map <silent> w <Plug>CamelCaseMotion_w
-"map <silent> b <Plug>CamelCaseMotion_b
-"map <silent> e <Plug>CamelCaseMotion_e
 
-" Pydiction plugin settings
-"let g:pydiction_location='/home/fran/.vim/ftplugin/pydiction'
-
-
-" Load settings specific for local machine
+" Load settings specific to local machine
 source ~/.vimrc-local
 
