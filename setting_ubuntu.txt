@@ -26,6 +26,7 @@ x apt-file
 
 WINDOW MANAGER
 x compizconfig-settings-manager
+x wmctrl
 
 PROGRAMMING
 x build-essential
@@ -52,6 +53,7 @@ x bvi
 - hexcurse
 - umbrello
 - gdbtui
+- okteta
 
 DATABASE
 x sqlite3
