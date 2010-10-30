@@ -27,6 +27,7 @@ x apt-file
 WINDOW MANAGER
 x compizconfig-settings-manager
 x wmctrl
+x compiz-fusion-plugins-extra (for grid plugin)
 
 PROGRAMMING
 x build-essential
