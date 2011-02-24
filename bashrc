@@ -18,9 +18,10 @@ alias g++='colorgcc'
 #export CC="colorgcc"
 
 # alias for opening file in an existing gvim, instead of launching a new one
-alias gv='gvim --remote-silent'
-# avoid messages when launching gvim
+alias vv='gvim --remote-silent'
+# avoid messages when launching gvim and emacs
 alias gvim='gvim 2>/dev/null'
+alias emacs='emacs 2>/dev/null'
 
 alias ipython='ipython -noconfirm_exit'
 alias gdb="gdbtui"
@@ -31,10 +32,17 @@ alias gdb="gdbtui"
 # environment vars
 
 # qt
-PATH=/usr/local/Trolltech/Qt-4.1.1/bin:"${PATH}"
+export PATH=/usr/local/Trolltech/Qt-4.1.1/bin:"${PATH}"
+
+# vmail
+export PATH=/var/lib/gems/1.9.1/bin:"${PATH}"
+
+# vimgolf
+export PATH=/var/lib/gems/1.8/bin:"${PATH}"
 
 # django
-#export PYTHONPATH=/home/fran/programming/python/django_projects:"${PYTHONPATH}"
+export PYTHONPATH=/home/fran/programming/python/django_projects:"${PYTHONPATH}"
+export PYTHONPATH=/home/fran/projects/m2000:"${PYTHONPATH}"
 
 # java
 #export JAVA_HOME=/usr/java/jdk
@@ -50,6 +58,9 @@ LANG=en_US.UTF-8
 # this allows ctrl-s in the console
 # it has to do with controlling ctrl-s in vim
 stty -ixon
+
+# lilypond
+export LYEDITOR='gvim --remote +:line:normchar file'
 
 # cdargs settings
 if [ -e /usr/share/doc/cdargs/examples/cdargs-bash.sh ]; then
@@ -126,6 +137,10 @@ ctrash() {
     rm -rf "$trash"
 }
 
+# list flash video files
+lsflash() {
+    file * | grep Video
+}
 
 # to avoid entering the passphrase on each git commit
 SSH_ENV="$HOME/.ssh/environment"
