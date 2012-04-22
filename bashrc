@@ -14,7 +14,7 @@ alias mv='mv -i'
 alias cls='/usr/bin/clear'
 alias diff='colordiff'
 alias gcc='colorgcc'
-alias g++='colorgcc'
+#alias g++='colorgcc'
 #export CC="colorgcc"
 
 # alias for opening file in an existing gvim, instead of launching a new one
@@ -32,17 +32,17 @@ alias gdb="gdbtui"
 # environment vars
 
 # qt
-export PATH=/usr/local/Trolltech/Qt-4.1.1/bin:"${PATH}"
+#export PATH=/usr/local/Trolltech/Qt-4.1.1/bin:"${PATH}"
 
 # vmail
-export PATH=/var/lib/gems/1.9.1/bin:"${PATH}"
+#export PATH=/var/lib/gems/1.9.1/bin:"${PATH}"
 
 # vimgolf
-export PATH=/var/lib/gems/1.8/bin:"${PATH}"
+#export PATH=/var/lib/gems/1.8/bin:"${PATH}"
 
 # django
-export PYTHONPATH=/home/fran/programming/python/django_projects:"${PYTHONPATH}"
-export PYTHONPATH=/home/fran/projects/m2000:"${PYTHONPATH}"
+#export PYTHONPATH=/home/fran/programming/python/django_projects:"${PYTHONPATH}"
+#export PYTHONPATH=/home/fran/projects/m2000:"${PYTHONPATH}"
 
 # java
 #export JAVA_HOME=/usr/java/jdk
@@ -60,7 +60,8 @@ LANG=en_US.UTF-8
 stty -ixon
 
 # lilypond
-export LYEDITOR='gvim --remote +:line:normchar file'
+#export LYEDITOR='gvim --remote +:line:normchar file'
+export LYEDITOR='emacsclient --no-wait +%(line)s:%(column)s %(file)s'
 
 # cdargs settings
 if [ -e /usr/share/doc/cdargs/examples/cdargs-bash.sh ]; then
@@ -69,7 +70,7 @@ fi
 
 
 findstr() {
-	egrep -IRn "$1" ${2:-.} \
+    grep -EIRn "$1" ${2:-*} \
 		--exclude-dir='.svn' \
 		--exclude='*.swp' \
 		--exclude='*.vcproj' \
@@ -83,6 +84,14 @@ findsym() {
 	non_symbol="(^|$|[^a-zA-Z0-9_])"
 	pattern="$non_symbol$1$non_symbol"
 	findstr "$pattern" "$2"
+}
+
+findpy() {
+    find . -name "*.py" -print0 | xargs -0 grep -Iin "$1"
+}
+
+findcpp() {
+    (find . -name "*.cpp" -print0 ; find . -name "*.h" -print0) | xargs -0 grep -Iin "$1"
 }
 
 # replacement for rm function, uses trash
@@ -139,7 +148,7 @@ ctrash() {
 
 # list flash video files
 lsflash() {
-    file * | grep Video
+    find . | xargs file | grep Video
 }
 
 # to avoid entering the passphrase on each git commit
@@ -165,3 +174,11 @@ else
     start_agent;
 fi
 
+# set window title
+function title {
+    echo -en "\033]2;$1\007"
+}
+
+function mount-iso {
+    sudo mount $1 /media/iso -t iso9660 -o loop
+}
