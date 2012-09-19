@@ -22,11 +22,12 @@ alias vv='gvim --remote-silent'
 # avoid messages when launching gvim and emacs
 alias gvim='gvim 2>/dev/null'
 alias emacs='emacs 2>/dev/null'
+alias emacsclient='emacsclient -n'
 
 alias ipython='ipython -noconfirm_exit'
 alias gdb="gdbtui"
 
-# vi behaviour for command line 
+# vi behaviour for command line
 #set -o vi
 
 # environment vars
@@ -135,7 +136,7 @@ del() {
 }
 
 # make function available from scripts
-export -f del   
+export -f del
 
 # clear trash
 ctrash() {
@@ -182,3 +183,5 @@ function title {
 function mount-iso {
     sudo mount $1 /media/iso -t iso9660 -o loop
 }
+
+source ~/init-config/bashrc-local
