@@ -123,7 +123,7 @@ del() {
                 # case 2
                 newname=`basename "$file"`.$timestamp
             fi
-        elif [ `basename "$file"` == "$file" ]; then
+        elif [ "`basename "$file"`" == "$file" ]; then
             # case 3
             newname="$file".$timestamp
         else
